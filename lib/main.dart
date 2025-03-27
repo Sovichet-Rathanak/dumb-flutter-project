@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -164,11 +163,8 @@ class _RizzlerPageState extends State<RizzlerPage> {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 30.0, top: 20.0),
-            child: SizedBox(
-              width: 400.00,
-              child: Row(
-                children: scoreKeeper,
-              ),
+            child: Wrap(
+              children: scoreKeeper,
             ),
           )
         ],
