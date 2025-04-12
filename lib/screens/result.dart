@@ -1,10 +1,13 @@
+import 'package:bmi_calc/components/customcard.dart';
+import 'package:bmi_calc/components/roundedbutton.dart';
 import 'package:bmi_calc/constant.dart';
-import 'package:bmi_calc/customcard.dart';
-import 'package:bmi_calc/roundedbutton.dart';
 import 'package:flutter/material.dart';
 
 class ResultScreen extends StatelessWidget {
-  const ResultScreen({super.key});
+  final String result;
+  final String interpretation;
+  final String bmiResult;
+  const ResultScreen({super.key, required this.result, required this.interpretation, required this.bmiResult});
 
   @override
   Widget build(BuildContext context) {
@@ -35,23 +38,23 @@ class ResultScreen extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 30.0),
+                        padding: const EdgeInsets.only(top: 30.0),
                       child: Text(
-                        "Normal",
+                        result,
                         style: kSmallText.copyWith(color: Colors.green),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 40.0),
                       child: Text(
-                        "30.55",
+                        bmiResult,
                         style: kLargeText.copyWith(fontSize: 64),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(15.0),
                       child: Text(
-                        "You have a higher than normal body weight. Try to exercise more.",
+                        interpretation,
                         textAlign: TextAlign.center,
                         style: kSmallText,
                       ),
@@ -61,7 +64,7 @@ class ResultScreen extends StatelessWidget {
                       width: 300,
                       child: RoundedButton(
                         func: () {
-                          Navigator.pop(context, MaterialPageRoute(builder: (context) => const ResultScreen()));
+                          Navigator.pop(context);
                         },
                         dwidget: Text(
                           "Re-Calculate",

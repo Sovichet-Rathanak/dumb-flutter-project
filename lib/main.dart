@@ -1,8 +1,9 @@
-import 'package:bmi_calc/childcard.dart';
+import 'package:bmi_calc/calcbrain.dart';
+import 'package:bmi_calc/components/childcard.dart';
+import 'package:bmi_calc/components/customcard.dart';
+import 'package:bmi_calc/components/roundedbutton.dart';
 import 'package:bmi_calc/constant.dart';
-import 'package:bmi_calc/customcard.dart';
-import 'package:bmi_calc/result.dart';
-import 'package:bmi_calc/roundedbutton.dart';
+import 'package:bmi_calc/screens/result.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -234,10 +235,11 @@ class _CalcState extends State<Calc> {
                   ),
                   GestureDetector(
                     onTap: () {
+                      Calcbrain calc = Calcbrain(height: height, weight: weight);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ResultScreen(),
+                          builder: (context) => ResultScreen(result: calc.getResult(), interpretation: calc.getInterpretation(), bmiResult: calc.getBMI(),),
                         ),
                       );
                     },
