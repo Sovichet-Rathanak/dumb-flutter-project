@@ -1,6 +1,8 @@
 import 'package:bmi_calc/childcard.dart';
 import 'package:bmi_calc/constant.dart';
 import 'package:bmi_calc/customcard.dart';
+import 'package:bmi_calc/result.dart';
+import 'package:bmi_calc/roundedbutton.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -22,11 +24,15 @@ class BMIcalc extends StatelessWidget {
         appBarTheme: const AppBarTheme(
           backgroundColor: Colors.black,
           shadowColor: Colors.black,
+          titleSpacing: 0,
           titleTextStyle: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 24,
           ),
+          iconTheme: IconThemeData(
+            color: Colors.white
+          )
         ),
       ),
       home: const SafeArea(child: Calc()),
@@ -47,6 +53,8 @@ class _CalcState extends State<Calc> {
 
   Gender? selectedGender; //Start out as null
   int height = 160;
+  int weight = 57;
+  int age = 18;
 
   @override
   Widget build(BuildContext context) {
@@ -159,19 +167,27 @@ class _CalcState extends State<Calc> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text("WEIGHT", style: kSmallText),
-                              Text("190", style: kLargeText),
+                              Text('$weight', style: kLargeText),
                               SizedBox(height: 10.0),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  RoundedButton(),
-                                  SizedBox(width: 20.0),
-                                  FloatingActionButton(
-                                    onPressed: () {
-                                      print("Hello World");
+                                  RoundedButton(
+                                    icon: Icons.remove,
+                                    func: () {
+                                      setState(() {
+                                        weight--;
+                                      });
                                     },
-                                    backgroundColor: Colors.black,
-                                    child: Icon(Icons.add, color: Colors.white),
+                                  ),
+                                  SizedBox(width: 20.0),
+                                  RoundedButton(
+                                    icon: Icons.add,
+                                    func: () {
+                                      setState(() {
+                                        weight++;
+                                      });
+                                    },
                                   ),
                                 ],
                               ),
@@ -179,16 +195,63 @@ class _CalcState extends State<Calc> {
                           ),
                         ),
                       ),
-                      Expanded(child: CustomCard(cardColor: kDefaultColor)),
+                      Expanded(
+                        child: CustomCard(
+                          cardColor: kDefaultColor,
+                          cardChild: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("AGE", style: kSmallText),
+                              Text('$age', style: kLargeText),
+                              SizedBox(height: 10.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  RoundedButton(
+                                    icon: Icons.remove,
+                                    func: () {
+                                      setState(() {
+                                        age--;
+                                      });
+                                    },
+                                  ),
+                                  SizedBox(width: 20.0),
+                                  RoundedButton(
+                                    icon: Icons.add,
+                                    func: () {
+                                      setState(() {
+                                        age++;
+                                      });
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
-                  SizedBox(
-                    height: 100,
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 15.0),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFD61D00),
-                        borderRadius: BorderRadius.circular(10.0),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ResultScreen(),
+                        ),
+                      );
+                    },
+                    child: SizedBox(
+                      height: 100,
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(horizontal: 15.0),
+                        decoration: BoxDecoration(
+                          color: Color(0xFFD61D00),
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Center(
+                          child: Text("CALCULATE", style: kSmallText),
+                        ),
                       ),
                     ),
                   ),
@@ -198,22 +261,6 @@ class _CalcState extends State<Calc> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class RoundedButton extends StatelessWidget {
-  const RoundedButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      onPressed: () {
-        print("Hello World");
-      },
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-      constraints: BoxConstraints(minHeight: 56, minWidth: 56),
-      fillColor: Colors.black,
     );
   }
 }
