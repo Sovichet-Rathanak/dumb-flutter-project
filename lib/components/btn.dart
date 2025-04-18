@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class Btn extends StatelessWidget {
-  final Widget screen;
   final double height;
   final double width;
   final String label;
@@ -9,25 +8,24 @@ class Btn extends StatelessWidget {
   final Color? borderColor;
   final double? borderWidth;
   final TextStyle? txtStyle;
+  final Function func;
+  
   const Btn({
     super.key,
-    required this.screen,
     required this.height,
     required this.width,
     required this.label,
     this.borderColor,
     this.borderWidth,
-    this.bgColor, this.txtStyle,
+    this.bgColor, this.txtStyle, required this.func,
   });
 
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      onPressed:
-          () => Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => screen),
-          ),
+      onPressed: (){
+        func();
+      },
       constraints: BoxConstraints(minHeight: height, minWidth: width),
       fillColor: bgColor ?? const Color(0xFFFF8686),
       shape: RoundedRectangleBorder(

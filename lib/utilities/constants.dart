@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+const Color kDefaultColor = Color(0xffFEA1A1); 
 
 final kThemeData = ThemeData(
   primaryColor: Colors.black,
@@ -23,3 +24,7 @@ final kBtnTxtStyle = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 18,
 );
+
+void func(BuildContext context, Widget screen){
+  Navigator.push(context, MaterialPageRoute(builder: (context) => screen));
+}
