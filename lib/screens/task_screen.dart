@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:todo/components/tasklists.dart';
 import 'package:todo/utilities/constants.dart';
+import 'package:todo/utilities/task.dart';
 
-class TaskScreen extends StatelessWidget {
+class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
 
+  @override
+  State<TaskScreen> createState() => _TaskScreenState();
+}
+
+class _TaskScreenState extends State<TaskScreen> {
+  late String text;
+  List<Task> taskArray = [
+    Task(taskName: "Complete Flutter"),
+    Task(taskName: "Start NestJs"),
+    Task(taskName: "Start VueJs"),
+  ];
   Widget buildBottomSheet(BuildContext context) {
     return Column(
       children: [
@@ -36,6 +48,7 @@ class TaskScreen extends StatelessWidget {
             ],
           ),
         ),
+        SizedBox(height: 100),
         SizedBox(width: 300, height: 300, child: Image.asset("asset/todo.png")),
         Container(
           padding: EdgeInsets.all(30),
@@ -43,11 +56,17 @@ class TaskScreen extends StatelessWidget {
             children: [
               TextField(
                 decoration: InputDecoration(hintText: 'Enter your task...'),
+                onChanged: (newText) {
+                  text = newText;
+                },
               ),
               SizedBox(height: 30),
               FilledButton(
                 onPressed: () {
-                  print("Do someting");
+                  setState(() {
+                    taskArray.add(Task(taskName: text));
+                  });
+                  Navigator.pop(context); // Close bottom sheet after adding
                 },
                 style: FilledButton.styleFrom(
                   backgroundColor: kThemeColorMain,
@@ -136,7 +155,14 @@ class TaskScreen extends StatelessWidget {
                   topRight: Radius.circular(20),
                 ),
               ),
-              child: TaskList(),
+              child: TaskList(
+                taskArray: taskArray,
+                toggleTask: (int index) {
+                  setState(() {
+                    taskArray[index].toggleDone();
+                  });
+                },
+              ),
             ),
           ),
         ],
